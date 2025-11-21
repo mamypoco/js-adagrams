@@ -28,26 +28,15 @@ export const drawLetters = () => {
 
 export const usesAvailableLetters = (input, lettersInHand) => {
   // input = dog, lettersInHand = letters 'daioqgnmac' 
-  // create shallow copy for tracking
+  // create copy for tracking so original hand not modified
   input = input.toUpperCase();
-  let updatedLettersInHand = [...lettersInHand];
+  let updatedHand = [...lettersInHand];
 
-  // loop through letters in input
-  // check if all character is in the updatedLetters
-  for (let letter of input) {
-    // letter = letter.toUpperCase();
-    for (const char in updatedLettersInHand) {
-      if (letter === char) {
-        //remove letter from updatedLetters
-        let indexOfLetter = updatedLettersInHand.indexOf(letter);
-        updatedLettersInHand.splice[indexOfLetter]
-      }
-      else {
-        return false;
-      }
-    }
+  for (const char of input) {
+    const index = updatedHand.indexOf(char);
+    if (index == -1) return false;
+    updatedHand.splice(index, 1);
   }
-  console.log(updatedLettersInHand);
   return true;
 };
 
