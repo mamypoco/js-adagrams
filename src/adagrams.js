@@ -1,4 +1,4 @@
-import { LETTER_POOL } from './constants.js';
+import { LETTER_POOL, SCORE_CHART } from './constants.js';
 
 const HAND_SIZE = 10;
 
@@ -27,23 +27,74 @@ export const drawLetters = () => {
 // drawLetters()
 
 export const usesAvailableLetters = (input, lettersInHand) => {
-  // input = dog, lettersInHand = letters 'daioqgnmac' 
   // create copy for tracking so original hand not modified
   input = input.toUpperCase();
   let updatedHand = [...lettersInHand];
 
   for (const char of input) {
-    const index = updatedHand.indexOf(char);
-    if (index == -1) return false;
+    const index = updatedHand.indexOf(char); //if not found, index is -1
+    if (index === -1) return false;
     updatedHand.splice(index, 1);
   }
   return true;
 };
 
 export const scoreWord = (word) => {
-  // Implement this method for wave 3
+  word = word.toUpperCase();
+  let score = 0;
+
+  if (!word) return 0;
+
+  for (const char of word) {
+    score += SCORE_CHART[char];
+  }
+
+  const BONUS_MIN_LENGTH = 7;
+  const BONUS_POINTS = 8;
+
+  if (word.length >= BONUS_MIN_LENGTH) {
+    score += BONUS_POINTS ;
+  }
+  return score;
 };
 
 export const highestScoreFrom = (words) => {
-  // Implement this method for wave 4
+
+  words = [...words];
+  const scores = words.map((word) => scoreWord(word));
+  const maxScore = Math.max(...scores);
+
+  const highestWords = words.filter((word, index) => scores[index] === maxScore
+  );
+
+  //if highestWords has only one
+  if (highestWords.length === 1) {
+    return {
+      word: highestWords[0],
+      score: maxScore
+    };
+  };
+
+  //if there are more
+  const wordLengthIs10 = highestWords.filter(word => word.length === 10);
+
+  if (wordLengthIs10.length > 0) {
+    return {
+      word: wordLengthIs10[0],
+      score: maxScore
+    };
+  };
+
+  const shortestWord = highestWords.reduce((shortest, current) => { if (current.length < shortest.length) {
+    return current;
+  };
+  return shortest;
+  });
+
+  return {
+    word: shortestWord,
+    score: maxScore
+  };
 };
+
+
