@@ -10,19 +10,20 @@ export const drawLetters = () => {
       trackingPool.push(letter);
     }
   }
-  console.log(trackingPool);
+  const generateLetters = (HAND_SIZE) => {
+    let letters = [];
 
-  let letters = [];
+    for (let i = 0; i < HAND_SIZE; i++) {
+      const randonIndex = Math.floor(Math.random() * trackingPool.length);
+      letters.push(trackingPool[randonIndex]);
+      // overwrite last z with the added one's position and remove the last one
+      trackingPool[randonIndex] = trackingPool[trackingPool.length - 1];
+      trackingPool.pop();
+    }
+    return letters;
+  };
 
-  for (let i = 0; i < HAND_SIZE; i++) {
-    const randonIndex = Math.floor(Math.random() * trackingPool.length);
-    letters.push(trackingPool[randonIndex]);
-    trackingPool[randonIndex] = trackingPool[trackingPool.length - 1];
-    trackingPool.pop();
-  }
-  // console.log(letters)
-  return letters;
-
+  return generateLetters(HAND_SIZE);
 };
 // drawLetters()
 

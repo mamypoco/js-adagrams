@@ -120,6 +120,7 @@ describe('Adagrams', () => {
     });
 
     it('returns a score of 0 if given an empty input', () => {
+      // throw 'Complete test';
       expect(scoreWord('')).toBe(0);
     });
 
