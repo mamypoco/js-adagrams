@@ -10,17 +10,17 @@ export const drawLetters = () => {
       trackingPool.push(letter);
     }
   }
-  const generateLetters = (HAND_SIZE) => {
-    let letters = [];
+  const generateLetters = (handsize) => {
+    let hand = [];
 
-    for (let i = 0; i < HAND_SIZE; i++) {
+    for (let i = 0; i < handsize; i++) {
       const randonIndex = Math.floor(Math.random() * trackingPool.length);
-      letters.push(trackingPool[randonIndex]);
+      hand.push(trackingPool[randonIndex]);
       // overwrite last z with added one's position and remove the last one
       trackingPool[randonIndex] = trackingPool[trackingPool.length - 1];
       trackingPool.pop();
     }
-    return letters;
+    return hand;
   };
 
   return generateLetters(HAND_SIZE);
