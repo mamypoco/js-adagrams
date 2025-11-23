@@ -16,7 +16,7 @@ export const drawLetters = () => {
     for (let i = 0; i < HAND_SIZE; i++) {
       const randonIndex = Math.floor(Math.random() * trackingPool.length);
       letters.push(trackingPool[randonIndex]);
-      // overwrite last z with the added one's position and remove the last one
+      // overwrite last z with added one's position and remove the last one
       trackingPool[randonIndex] = trackingPool[trackingPool.length - 1];
       trackingPool.pop();
     }
@@ -25,16 +25,17 @@ export const drawLetters = () => {
 
   return generateLetters(HAND_SIZE);
 };
-// drawLetters()
 
 export const usesAvailableLetters = (input, lettersInHand) => {
-  // create copy for tracking so original hand not modified
   input = input.toUpperCase();
+  // create copy for tracking so original not modified
   let updatedHand = [...lettersInHand];
 
   for (const char of input) {
-    const index = updatedHand.indexOf(char); //if not found, index is -1
+    const index = updatedHand.indexOf(char); 
+    //if not found, index is -1
     if (index === -1) return false;
+    //if found, remove it from hand
     updatedHand.splice(index, 1);
   }
   return true;
@@ -60,23 +61,20 @@ export const scoreWord = (word) => {
 };
 
 export const highestScoreFrom = (words) => {
-
-  words = [...words];
   const scores = words.map((word) => scoreWord(word));
   const maxScore = Math.max(...scores);
 
   const highestWords = words.filter((word, index) => scores[index] === maxScore
   );
 
-  //if highestWords has only one
+  //if only one word
   if (highestWords.length === 1) {
     return {
       word: highestWords[0],
       score: maxScore
     };
   };
-
-  //if there are more
+  //if there are more, 10 letters wins
   const wordLengthIs10 = highestWords.filter(word => word.length === 10);
 
   if (wordLengthIs10.length > 0) {
@@ -85,7 +83,7 @@ export const highestScoreFrom = (words) => {
       score: maxScore
     };
   };
-
+  //otherwise shorter word wins
   const shortestWord = highestWords.reduce((shortest, current) => { if (current.length < shortest.length) {
     return current;
   };
