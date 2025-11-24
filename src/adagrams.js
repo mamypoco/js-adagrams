@@ -32,7 +32,7 @@ export const usesAvailableLetters = (input, lettersInHand) => {
   let updatedHand = [...lettersInHand];
 
   for (const char of input) {
-    const index = updatedHand.indexOf(char); 
+    const index = updatedHand.indexOf(char);
     //if not found, index is -1
     if (index === -1) return false;
     //if found, remove it from hand
